@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use MichaelOrenda\ApiResponse\Traits\ApiResponseTrait;
 use MichaelOrenda\Rbac\Models\Permission;
 
 /**
@@ -15,6 +16,8 @@ use MichaelOrenda\Rbac\Models\Permission;
  */
 class PermissionController extends Controller
 {
+    use ApiResponseTrait;
+
     public function index(Request $request)
     {
         $query = Permission::query();
@@ -29,13 +32,13 @@ class PermissionController extends Controller
 
         $perPage = $request->integer('per_page', 25);
 
-        return response()->json($query->paginate($perPage));
+        return $this->success($query->paginate($perPage));
     }
 
     public function show($id)
     {
         $permission = Permission::with('roles')->findOrFail($id);
-        return response()->json($permission);
+        return $this->success($permission);
     }
 
     public function store(Request $request)
@@ -48,12 +51,12 @@ class PermissionController extends Controller
         ]);
 
         if ($v->fails()) {
-            return response()->json(['errors' => $v->errors()], 422);
+            $this->validationError($v->errors());
         }
 
         $permission = Permission::create($v->validated());
 
-        return response()->json($permission, 201);
+        return $this->success($permission, 'Permission created', 201);
     }
 
     public function update(Request $request, $id)
@@ -68,12 +71,12 @@ class PermissionController extends Controller
         ]);
 
         if ($v->fails()) {
-            return response()->json(['errors' => $v->errors()], 422);
+            $this->validationError($v->errors());
         }
 
         $permission->update($v->validated());
 
-        return response()->json($permission);
+        return $this->success($permission, 'Permission updated');
     }
 
     public function destroy($id)
@@ -85,7 +88,7 @@ class PermissionController extends Controller
             $permission->delete();
         });
 
-        return response()->json(['message' => 'deleted']);
+        return $this->success(null, 'Permission deleted');
     }
 
     /**
@@ -105,6 +108,6 @@ class PermissionController extends Controller
                 })->values();
             });
 
-        return response()->json($rows);
+        return $this->success($rows);
     }
 }

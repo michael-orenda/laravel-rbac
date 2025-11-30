@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use MichaelOrenda\ApiResponse\Traits\ApiResponseTrait;
 use MichaelOrenda\Rbac\Models\Permission;
 
 /**
@@ -18,6 +19,7 @@ use MichaelOrenda\Rbac\Models\Permission;
  */
 class ModelPermissionController extends Controller
 {
+    use ApiResponseTrait;
     /**
      * List permissions of a polymorphic model
      * GET /rbac/models/{type}/{id}/permissions
@@ -31,7 +33,7 @@ class ModelPermissionController extends Controller
 
         $permissions = Permission::whereIn('id', $permissionIds)->get();
 
-        return response()->json($permissions);
+        return $this->success($permissions);
     }
 
     /**
@@ -45,7 +47,7 @@ class ModelPermissionController extends Controller
         ]);
 
         if ($v->fails()) {
-            return response()->json(['errors' => $v->errors()], 422);
+            return $this->validationError($v->errors());
         }
 
         $input = $request->permission;
@@ -55,7 +57,7 @@ class ModelPermissionController extends Controller
             : Permission::where('slug', $input)->first();
 
         if (!$permission) {
-            return response()->json(['error' => 'permission_not_found'], 404);
+            return $this->error('permission_not_found', 404);
         }
 
         DB::table('model_has_permissions')->insertOrIgnore([
@@ -80,7 +82,7 @@ class ModelPermissionController extends Controller
         ]);
 
         if ($v->fails()) {
-            return response()->json(['errors' => $v->errors()], 422);
+            return $this->validationError($v->errors());
         }
 
         $input = $request->permission;
@@ -90,7 +92,7 @@ class ModelPermissionController extends Controller
             : Permission::where('slug', $input)->first();
 
         if (!$permission) {
-            return response()->json(['error' => 'permission_not_found'], 404);
+            return $this->error('permission_not_found', 404);
         }
 
         DB::table('model_has_permissions')
@@ -99,6 +101,6 @@ class ModelPermissionController extends Controller
             ->where('permission_id', $permission->id)
             ->delete();
 
-        return response()->json(['message' => 'revoked']);
+        return $this->success(null, 'revoked');
     }
 }

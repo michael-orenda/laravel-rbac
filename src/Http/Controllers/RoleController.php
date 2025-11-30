@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use MichaelOrenda\ApiResponse\Traits\ApiResponseTrait;
 use MichaelOrenda\Rbac\Models\Role;
 use MichaelOrenda\Rbac\Models\Permission;
 
@@ -20,6 +21,8 @@ use MichaelOrenda\Rbac\Models\Permission;
  */
 class RoleController extends Controller
 {
+    use ApiResponseTrait; 
+
     public function index(Request $request)
     {
         $query = Role::query();
@@ -34,13 +37,15 @@ class RoleController extends Controller
 
         $perPage = $request->integer('per_page', 25);
 
-        return response()->json($query->paginate($perPage));
+        return $this->success("Roles fetched successfully", $query->paginate($perPage));
+
     }
 
     public function show($id)
     {
         $role = Role::with('permissions')->findOrFail($id);
-        return response()->json($role);
+        return $this->success("Role details", $role);
+
     }
 
     public function store(Request $request)
@@ -53,12 +58,13 @@ class RoleController extends Controller
         ]);
 
         if ($v->fails()) {
-            return response()->json(['errors' => $v->errors()], 422);
+            return $this->validationError($v->errors());
         }
 
         $role = Role::create($v->validated());
 
-        return response()->json($role, 201);
+        return $this->success("Role created successfully", $role, 201);
+
     }
 
     public function update(Request $request, $id)
@@ -73,12 +79,13 @@ class RoleController extends Controller
         ]);
 
         if ($v->fails()) {
-            return response()->json(['errors' => $v->errors()], 422);
+            return $this->validationError($v->errors());
         }
 
         $role->update($v->validated());
 
-        return response()->json($role);
+        return $this->success("Role updated successfully", $role);
+
     }
 
     public function destroy($id)
@@ -92,7 +99,8 @@ class RoleController extends Controller
             $role->delete();
         });
 
-        return response()->json(['message' => 'deleted']);
+        return $this->success("Role deleted successfully");
+
     }
 
     /**
@@ -111,7 +119,7 @@ class RoleController extends Controller
         ]);
 
         if ($v->fails()) {
-            return response()->json(['errors' => $v->errors()], 422);
+            return $this->validationError($v->errors());
         }
 
         $permissions = $request->input('permissions');
@@ -126,14 +134,16 @@ class RoleController extends Controller
 
         $role->permissions()->syncWithoutDetaching($ids);
 
-        return response()->json($role->permissions()->get());
+        return $this->success("Permissions attached successfully", $role->permissions()->get());
+
     }
 
     public function detachPermission(Request $request, $id, $permissionId)
     {
         $role = Role::findOrFail($id);
         $role->permissions()->detach($permissionId);
-        return response()->json(['message' => 'detached']);
+        return $this->success("Permission detached successfully");
+
     }
 
     /**
@@ -154,6 +164,6 @@ class RoleController extends Controller
                 })->values();
             });
 
-        return response()->json($rows);
+        return $this->success("Assigned models fetched successfully", $rows);
     }
 }

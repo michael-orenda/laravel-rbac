@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use MichaelOrenda\ApiResponse\Traits\ApiResponseTrait;
 use MichaelOrenda\Rbac\Models\Role;
 use MichaelOrenda\Rbac\Models\Permission;
 
@@ -16,6 +17,7 @@ use MichaelOrenda\Rbac\Models\Permission;
  */
 class ModelRoleController extends Controller
 {
+    use ApiResponseTrait;
     /**
      * List roles for a model
      * GET /rbac/models/{type}/{id}/roles
@@ -29,7 +31,7 @@ class ModelRoleController extends Controller
 
         $roles = Role::whereIn('id', $query)->get();
 
-        return response()->json($roles);
+        return $this->success($roles);
     }
 
     /**
@@ -44,7 +46,7 @@ class ModelRoleController extends Controller
         ]);
 
         if ($v->fails()) {
-            return response()->json(['errors' => $v->errors()], 422);
+            return $this->validationError($v->errors());        
         }
 
         $roleInput = $request->input('role');
@@ -52,7 +54,7 @@ class ModelRoleController extends Controller
         $role = is_numeric($roleInput) ? Role::find($roleInput) : Role::where('slug', $roleInput)->first();
 
         if (! $role) {
-            return response()->json(['error' => 'role_not_found'], 404);
+            return $this->error('role_not_found', 404);
         }
 
         DB::table('model_has_roles')->insertOrIgnore([
@@ -63,7 +65,7 @@ class ModelRoleController extends Controller
             'updated_at' => now(),
         ]);
 
-        return response()->json(['message' => 'assigned']);
+        return $this->success(null, 'assigned');
     }
 
     /**
@@ -78,14 +80,14 @@ class ModelRoleController extends Controller
         ]);
 
         if ($v->fails()) {
-            return response()->json(['errors' => $v->errors()], 422);
+            return $this->validationError($v->errors());
         }
 
         $roleInput = $request->input('role');
         $role = is_numeric($roleInput) ? Role::find($roleInput) : Role::where('slug', $roleInput)->first();
 
         if (! $role) {
-            return response()->json(['error' => 'role_not_found'], 404);
+            return $this->error('role_not_found', 404);
         }
 
         DB::table('model_has_roles')
@@ -94,7 +96,7 @@ class ModelRoleController extends Controller
             ->where('role_id', $role->id)
             ->delete();
 
-        return response()->json(['message' => 'revoked']);
+        return $this->success(null, 'revoked');
     }
 
     /**
@@ -108,14 +110,14 @@ class ModelRoleController extends Controller
         ]);
 
         if ($v->fails()) {
-            return response()->json(['errors' => $v->errors()], 422);
+            return $this->validationError($v->errors());
         }
 
         $permInput = $request->input('permission');
         $perm = is_numeric($permInput) ? Permission::find($permInput) : Permission::where('slug', $permInput)->first();
 
         if (! $perm) {
-            return response()->json(['error' => 'permission_not_found'], 404);
+            return $this->error('permission_not_found', 404);
         }
 
         DB::table('model_has_permissions')->insertOrIgnore([
@@ -126,7 +128,7 @@ class ModelRoleController extends Controller
             'updated_at' => now(),
         ]);
 
-        return response()->json(['message' => 'assigned']);
+        return $this->success(null, 'assigned');
     }
 
     /**
@@ -139,14 +141,14 @@ class ModelRoleController extends Controller
         ]);
 
         if ($v->fails()) {
-            return response()->json(['errors' => $v->errors()], 422);
+            return $this->validationError($v->errors());
         }
 
         $permInput = $request->input('permission');
         $perm = is_numeric($permInput) ? Permission::find($permInput) : Permission::where('slug', $permInput)->first();
 
         if (! $perm) {
-            return response()->json(['error' => 'permission_not_found'], 404);
+            return $this->error('permission_not_found', 404);
         }
 
         DB::table('model_has_permissions')
@@ -155,6 +157,7 @@ class ModelRoleController extends Controller
             ->where('permission_id', $perm->id)
             ->delete();
 
-        return response()->json(['message' => 'revoked']);
+        return $this->success(null, 'revoked');
+
     }
 }
