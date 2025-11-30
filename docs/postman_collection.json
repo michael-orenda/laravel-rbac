@@ -1,0 +1,324 @@
+{
+    "info": {
+        "name": "Laravel RBAC API",
+        "_postman_id": "rbac-collection-001",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "GET /rbac/roles",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/roles",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "roles"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "POST /rbac/roles",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/roles",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "roles"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "GET /rbac/roles/{id}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/roles/{id}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "roles",
+                        "{id}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "PUT /rbac/roles/{id}",
+            "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/roles/{id}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "roles",
+                        "{id}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "DELETE /rbac/roles/{id}",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/roles/{id}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "roles",
+                        "{id}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "POST /rbac/roles/{id}/permissions",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/roles/{id}/permissions",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "roles",
+                        "{id}",
+                        "permissions"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "GET /rbac/permissions",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/permissions",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "permissions"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "POST /rbac/permissions",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/permissions",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "permissions"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "GET /rbac/permissions/{id}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/permissions/{id}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "permissions",
+                        "{id}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "PUT /rbac/permissions/{id}",
+            "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/permissions/{id}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "permissions",
+                        "{id}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "DELETE /rbac/permissions/{id}",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/permissions/{id}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "permissions",
+                        "{id}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "GET /rbac/models/{type}/{id}/roles",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/models/{type}/{id}/roles",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "models",
+                        "{type}",
+                        "{id}",
+                        "roles"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "POST /rbac/models/{type}/{id}/roles",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/models/{type}/{id}/roles",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "models",
+                        "{type}",
+                        "{id}",
+                        "roles"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "DELETE /rbac/models/{type}/{id}/roles",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/models/{type}/{id}/roles",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "models",
+                        "{type}",
+                        "{id}",
+                        "roles"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "GET /rbac/models/{type}/{id}/permissions",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/models/{type}/{id}/permissions",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "models",
+                        "{type}",
+                        "{id}",
+                        "permissions"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "POST /rbac/models/{type}/{id}/permissions",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/models/{type}/{id}/permissions",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "models",
+                        "{type}",
+                        "{id}",
+                        "permissions"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "DELETE /rbac/models/{type}/{id}/permissions",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/rbac/models/{type}/{id}/permissions",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "rbac",
+                        "models",
+                        "{type}",
+                        "{id}",
+                        "permissions"
+                    ]
+                }
+            }
+        }
+    ]
+}

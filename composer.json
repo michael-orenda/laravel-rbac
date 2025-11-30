@@ -1,0 +1,68 @@
+{
+    "name": "michael-orenda/laravel-rbac",
+    "description": "A powerful, polymorphic, hierarchical RBAC package for Laravel 12+. Supports recursive roles, permissions, organizations, and integrates optionally with michael-orenda recursive and API response packages.",
+    "keywords": [
+        "laravel",
+        "rbac",
+        "roles",
+        "permissions",
+        "acl",
+        "access-control",
+        "authorization",
+        "polymorphic",
+        "recursive",
+        "michael-orenda"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Orenda",
+            "email": "rminchrist@gmail.com",
+            "role": "Software Engineer"
+        }
+    ],
+    "homepage": "https://github.com/michael-orenda/laravel-rbac",
+    "support": {
+        "issues": "https://github.com/michael-orenda/laravel-rbac/issues",
+        "source": "https://github.com/michael-orenda/laravel-rbac"
+    },
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^12.0",
+        "illuminate/database": "^12.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0",
+        "orchestra/testbench": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "MichaelOrenda\\Rbac\\": "src/",
+            "MichaelOrenda\\Rbac\\Database\\Seeders\\": "database/seeders/"
+
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MichaelOrenda\\Rbac\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MichaelOrenda\\Rbac\\RbacServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "phpunit",
+        "lint": "php -l src"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
+
